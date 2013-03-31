@@ -20,7 +20,7 @@ Organization
 ------------
 Specific guidlines for organizing the web app are outlined in the comments in each of the associated files.
 Genearlly speaking:
-- Loading views is handled by *router.js*
-- Data collection is handled by *view.js*
-- Data storage & retrieval is handled by *models.js* and *collections.js*
+- Loading views is handled by **router.js**
+- Data collection is handled by **view.js**
+- Data storage & retrieval is handled by **models.js** and **collections.js**
 
