@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Project 0</title>
+	<link rel="stylesheet" href="css/bootstrap.css">
+</head>
+<body>
+	<script src="js/jquery.js"></script>
+	<script src="js/bootstrap.js"></script>
+	<script src="js/underscore.js"></script>
+	<script src="js/backbone.js"></script>
+	<script type="text/javascript">
+		// create a top-level namespace for the app
+		var app = { dev: true };
+	</script>
+	<script src="js/models.js"></script>
+	<script src="js/collections.js"></script>
+	<script src="js/views.js"></script>
+	<script src="js/router.js"></script>
+	<script src="js/app.fns.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			
+			// load the template files
+			app.fn.loadTemplates([
+			 'tpl/navbar.html',
+			 'tpl/main.html',
+			 'tpl/about.html',
+			 'tpl/contact.html'
+			])
+			
+			// once the templates are loaded, do this
+			.then(function(templates) {
+				
+				// assign the templates
+				app.t = templates;
+				// create the initial page
+				app.v.page = new app.V.Page();
+				// create the router
+				app.router = new app.Router();
+				// start the tracker
+				Backbone.history.start();
+				
+			});
+			
+		});
+	</script>
+</body>
+</html>
