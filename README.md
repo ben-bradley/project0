@@ -4,10 +4,12 @@ Project 0
 About
 -----
 Project 0 is a basic boiler plate for a web app.  It uses:
+
 ### Server-side
 - NodeJS
 - MongoDB
 - Express
+
 ### Client-side
 - JQuery
 - Backbone
