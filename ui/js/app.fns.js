@@ -33,7 +33,7 @@ app.fn.loadTemplates = function(templateFiles, templateObject) {
 	// set the when to build the templates when they're loaded
 	$.when.apply($, promises).done(function() {
 		_.each(arguments, function(templates) {
-			_.each($('<div />').append(templates).children(), function(template) {
+			_.each($('<div>'+templates).children(), function(template) {
 				templateObject[$(template).attr('id')] = _.template($(template).html());
 			});
 		});

@@ -25,12 +25,14 @@ app.configure(function() {
 	
 	// process user login requests
 	app.post('/me', function(req, res) {
-		/**************************************************************/
-		/* There should be user-checking of some sort done here       */
-		/* All I'm doing is taking the user input and sending it back */
-		/**************************************************************/
+		/************************************************************/
+		/* There should be user-checking of some sort done here     */
+		/* All I'm doing is taking the user input, adding a random 	*/
+		/* _id value and sending it back														*/
+		/************************************************************/
 		req.session.me = req.body;
 		req.session.me._id = new ObID();
+		req.session.me.signedin = true;
 		res.send({ success: req.session.me });
 	});
 	

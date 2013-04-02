@@ -25,7 +25,7 @@ app.M.Me = Backbone.Model.extend({
 	},
 	
 	// returns a promise to delay page laods
-	get: function() {
+	getMe: function() {
 		var self = this;
 		return $.get(this.url, function(data) {
 			self.set(data); // stuff the data back into the model
@@ -38,12 +38,11 @@ app.M.Me = Backbone.Model.extend({
 		return $.post(this.url, data, function(result) {
 			if (result.success) {
 				self.set(result.success);
-				self.set('signedin', true);
 				app.router.navigate('/');
 			}
 			else if (result.error) {
+				self.set(self.defaults());
 				console.log(result.error);
-				self.set('signedin', false);
 			}
 		});
 	},

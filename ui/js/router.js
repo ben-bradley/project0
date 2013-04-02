@@ -33,7 +33,9 @@ app.Router = Backbone.Router.extend({
 	// show the signin form
 	signin: function() {
 		console.log("signin clicked");
-		app.v.page.main.signin.render();
+		if (app.m.me.get('signedin') == false) {
+			app.v.page.main.signin.render();
+		}
 	},
 	
 	// trigger the signout
