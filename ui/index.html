@@ -3,39 +3,59 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Project 0</title>
+	<!-- load the styles -->
 	<link rel="stylesheet" href="css/bootstrap.css">
+	<style type='text/css'>
+		.jumbotron {
+			text-align: center;
+			padding: 25px;
+		}
+	</style>
 </head>
 <body>
+	<!-- load libraries -->
 	<script src="js/jquery.js"></script>
 	<script src="js/bootstrap.js"></script>
 	<script src="js/underscore.js"></script>
 	<script src="js/backbone.js"></script>
+	<!-- initiate the app namespace -->
 	<script type="text/javascript">
-		// create a top-level namespace for the app
 		var app = { dev: true };
 	</script>
+	<!-- load the Backbone modules -->
 	<script src="js/models.js"></script>
 	<script src="js/collections.js"></script>
 	<script src="js/views.js"></script>
 	<script src="js/router.js"></script>
+	<!-- load the helper functions -->
 	<script src="js/app.fns.js"></script>
+	<!-- when the DOM is ready, load the page -->
 	<script type="text/javascript">
 		$(document).ready(function() {
 			
-			// load the template files
-			app.fn.loadTemplates([
-			 'tpl/navbar.html',
-			 'tpl/main.html',
-			 'tpl/about.html',
-			 'tpl/contact.html'
-			])
+			// create the model for this user (me!)
+			app.m.me = new app.M.Me();
 			
+			$.when(
+				// load the template files
+				app.fn.loadTemplates([
+				 'tpl/navbar.html',
+				 'tpl/main.html',
+				 'tpl/about.html',
+				 'tpl/contact.html',
+				 'tpl/signin.html'
+				]),
+				// get the current user info
+				app.m.me.get()
+			)
 			// once the templates are loaded, do this
-			.then(function(templates) {
+			.done(function(templates) {
 				
+				// hide the page loader
+				$('#pageloader').hide();
 				// assign the templates
 				app.t = templates;
-				// create the initial page
+				// create the page framework
 				app.v.page = new app.V.Page();
 				// create the router
 				app.router = new app.Router();
@@ -46,5 +66,11 @@
 			
 		});
 	</script>
+	<div class="container jumbotron" id="pageloader">
+		<h1>Loading...</h1>
+		<div class="progress progress-striped active">
+			<div class="bar" style="width:100%"></div>
+		</div>
+	</div>
 </body>
 </html>
