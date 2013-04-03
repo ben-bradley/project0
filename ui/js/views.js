@@ -15,6 +15,7 @@ app.V.Page = Backbone.View.extend({
 	// create the child views in 'initialize'...
 	initialize: function() {
 		this.navbar = new app.V.Navbar({ model: app.m.me });
+		this.alerts = new app.V.Alerts();
 		this.main = new app.V.Main({ model: app.m.me });
 		this.render();
 	},
@@ -22,9 +23,11 @@ app.V.Page = Backbone.View.extend({
 	// append them to the DOM in 'render'
 	render: function() {
 		this.$el.append(this.navbar.$el);
+		this.$el.append(this.alerts.$el);
 		this.$el.append(this.main.$el);
 		$('body').append(this.$el);
 		this.navbar.setActive(); // set the active nav button
+		this.alerts.fixHeight();
 		this.main.fixHeight(); // fix the height of the main section
 		return this;
 	}
@@ -67,6 +70,62 @@ app.V.Navbar = Backbone.View.extend({
 			$(ev.currentTarget) :
 			this.$el.find('a[href="'+location.hash+'"]');
 		el.parent().addClass('active');
+	}
+	
+});
+
+/*******************************************************/
+/* The Alerts view shows popup alerts in the top-right */
+/*******************************************************/
+app.V.Alerts = Backbone.View.extend({
+	
+	// style set in index.html
+	className: 'alerts-container',
+	
+	// by default, just render the container
+	initialize: function() {
+		this.render();
+	},
+	
+	// content is added later
+	render: function() {
+		return this;
+	},
+	
+	// this resizes #main to fit the window w/ a 15px buffer
+	fixHeight: function() {
+		var h = $(window).innerHeight() - this.$el.offset().top - 15;
+		this.$el.css({ 'height': h, 'max-height': h, 'overflow-y': 'auto' });
+	},
+	
+	// this draws the actual alert & sets a timeout to hide it
+	alert: function(options) {
+		var alertDiv = new app.V.Alert(options);
+		console.log(alertDiv);
+		this.$el.append(alertDiv.$el);
+		setTimeout(function() { alertDiv.$el.alert('close'); }, (options.timer || 5000));
+	}
+	
+});
+
+/********************************************/
+/* This is the actual alert to be displayed */
+/********************************************/
+app.V.Alert = Backbone.View.extend({
+	
+	// the alert is yellow & will fade by default
+	className: 'alert fade in',
+	
+	// add custom alert classes (per Bootstrap)
+	initialize: function(options) {
+		if (options.alertClass) { this.$el.addClass(options.alertClass); }
+		this.$el.html(options.message);
+		this.render();
+	},
+	
+	// return the view to be apended to the DOM
+	render: function() {
+		return this;
 	}
 	
 });
